@@ -1,39 +1,46 @@
 <script setup>
-import {signIn} from 'next-auth/react'
 import signinSchema from '~/server/schemas/signin.schema'
 
+const {signIn} = useAuth()
+
+const isLoading = ref(false)
 const formState = reactive({
       email: undefined,
       password: undefined
 })
 
 const onSubmit = async event => {
-      await signIn(event.data)
+      try {
+            isLoading.value = true
+            const res = await signIn('credentials', {
+                  email: event.data.email,
+                  password: event.data.password,
+                  redirect: false
+            })
+            if (!res?.error) {
+                  useRouter().push('/')
+            }
+      } catch (error) {
+            console.log(error)
+      } finally {
+            isLoading.value = false
+      }
 }
 </script>
 <template>
-      <div class="grid lg:grid-cols-2 h-screen">
-            <div class="left place-self-center w-full px-8 md:px-16 lg:px-24 2xl:px-52">
-                  <div class="flex justify-center">
-                        <Logo />
-                  </div>
-                  <h1 class="text-center font-bold text-xl my-4">Login yo your account</h1>
-                  <UCard>
-                        <UForm :schema="signinSchema" :state="formState" class="space-y-4" @submit="onSubmit">
-                              <UFormGroup label="Email" name="email">
-                                    <UInput v-model="formState.email" />
-                              </UFormGroup>
-                              <UFormGroup label="Password" name="password">
-                                    <UInput v-model="formState.password" />
-                              </UFormGroup>
-                              <UButton type="submit" block>Login</UButton>
-                        </UForm>
-                  </UCard>
-            </div>
-            <div class="right hidden lg:block">
-                  <div></div>
-            </div>
-      </div>
+      <WrapperAuth title="Login to your account">
+            <UCard>
+                  <UForm :schema="signinSchema" :state="formState" class="space-y-4" @submit="onSubmit">
+                        <UFormGroup label="Email" name="email">
+                              <UInput v-model="formState.email" />
+                        </UFormGroup>
+                        <UFormGroup label="Password" name="password">
+                              <UInput v-model="formState.password" type="password"/>
+                        </UFormGroup>
+                        <UButton :loading="isLoading" type="submit" block>Login</UButton>
+                  </UForm>
+            </UCard>
+      </WrapperAuth>
 </template>
 <style>
 .right {
