@@ -1,7 +1,7 @@
 <script setup>
 import signinSchema from '~/server/schemas/signin.schema'
 
-const {signIn} = useAuth()
+const { signIn } = useAuth()
 
 const isLoading = ref(false)
 const formState = reactive({
@@ -35,7 +35,7 @@ const onSubmit = async event => {
                               <UInput v-model="formState.email" />
                         </UFormGroup>
                         <UFormGroup label="Password" name="password">
-                              <UInput v-model="formState.password" type="password"/>
+                              <UInput v-model="formState.password" type="password" />
                         </UFormGroup>
                         <UButton :loading="isLoading" type="submit" block>Login</UButton>
                   </UForm>
