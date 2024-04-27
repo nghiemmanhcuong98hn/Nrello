@@ -8,7 +8,7 @@ const getUser = async id => {
 }
 
 export default NuxtAuthHandler({
-      secret: useRuntimeConfig().auth.secret ?? 'mysecret',
+      secret: useRuntimeConfig().auth.secret,
 
       pages: {
             signIn: '/auth/signin'
@@ -17,7 +17,7 @@ export default NuxtAuthHandler({
       providers: [
             CredentialsProvider.default({
                   name: 'credentials',
-                  origin: useRuntimeConfig().auth.origin ?? 'http://localhost:3000',
+                  origin: useRuntimeConfig().auth.origin,
                   async authorize(credentials) {
                         // logic login would go
                         const user = await User.findOne({email: credentials.email}).select('+password')
