@@ -23,7 +23,6 @@ const onUpdateBoardAfter = async () => {
 	_selectBoard.value = undefined;
 };
 
-
 const handleOpenBoardForm = (type, data = undefined) => {
 	_formBoardType.value = type;
 	_isShowCrateBoard.value = true;
@@ -52,14 +51,13 @@ const handleOpenBoardForm = (type, data = undefined) => {
 			</div>
 		</USlideover>
 		<div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4">
-			<div
+			<Card
 				v-for="board in boards"
-				:key="board?._id"
-				class="rounded-lg shadow border p-2 text-center dark:border-gray-700 cursor-pointer"
-				@click="() => handleOpenBoardForm('update', board)"
-			>
-				{{ board.name }}
-			</div>
+				:board="board"
+				:on-edit="
+					selectBoard => handleOpenBoardForm('update', selectBoard)
+				"
+			/>
 		</div>
 	</WrapperDefault>
 </template>
