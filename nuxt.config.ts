@@ -1,25 +1,38 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-      devtools: {enabled: true},
+    devtools: { enabled: true },
 
-      modules: ['nuxt-server-utils', '@nuxt/ui', '@sidebase/nuxt-auth'],
+    modules: ['nuxt-server-utils', '@nuxt/ui', '@sidebase/nuxt-auth'],
 
-      ui:{},
+    ui: {},
 
-      runtimeConfig: {
-            public: {
-                  mongodbUrl: `mongodb+srv://${process.env.NUXT_DB_USERNAME}:${process.env.NUXT_DB_PASSWORD}@trello.xk40ihq.mongodb.net/?retryWrites=true&w=majority&appName=trello`
-            },
-            auth:{
-                  secret:process.env.AUTH_SECRET,
-                  origin:process.env.AUTH_ORIGIN,
-            }
-      },
+    runtimeConfig: {
+        public: {
+            mongodbUrl: `mongodb+srv://${process.env.NUXT_DB_USERNAME}:${process.env.NUXT_DB_PASSWORD}@trello.xk40ihq.mongodb.net/?retryWrites=true&w=majority&appName=trello`
+        },
+        auth: {
+            secret: process.env.AUTH_SECRET,
+            origin: process.env.AUTH_ORIGIN
+        }
+    },
 
-      auth: {
-            baseURL: process.env.AUTH_ORIGIN,
-            provider: {
-                  type: 'authjs'
-            }
-      }
+    auth: {
+        baseURL: process.env.AUTH_ORIGIN,
+        provider: {
+            type: 'authjs'
+        }
+    },
+
+    ssr: true,
+    nitro: {
+        baseURL: 'http://localhost:3000',
+        prerender: {
+            crawlLinks: true,
+            failOnError: false
+        }
+    },
+    routeRules: {
+        '/**': { swr: true },
+        '/api/**': { ssr: false }
+    }
 })
