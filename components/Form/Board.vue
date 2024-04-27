@@ -86,6 +86,9 @@ watchEffect(() => {
 		<UFormGroup label="Name" name="name">
 			<UInput v-model="formState.name" />
 		</UFormGroup>
+		<UFormGroup name="coverImage" label="Cover Image">
+			<ImagePicker v-model="formState.coverImage" />
+		</UFormGroup>
 		<UButton block type="submit" :loading="_isLoading">
 			{{ type === 'update' ? 'Update Board' : 'Create Board' }}
 		</UButton>
