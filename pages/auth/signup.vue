@@ -19,7 +19,7 @@ const onSubmit = async event => {
                   method: 'POST',
                   body: event.data,
                   watch: false,
-                  onResponse: ({response: {status, _data}}) => {
+                  onResponse: ({ response: { status, _data } }) => {
                         if (status == 200) {
                               toast.add({
                                     title: 'Account created',
