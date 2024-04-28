@@ -36,9 +36,12 @@ const actions = ref([
 <template>
 	<div
 		class="shadow drak:bg-gray-800 rounded-lg overflow-hidden relative min-h-36 cursor-pointer"
-		@click="() => router.push(`/board/${board?._id}`)"
 	>
-		<div v-if="board.coverImage" class="h-36 relative">
+		<div
+			v-if="board.coverImage"
+			class="h-36 relative"
+			@click="() => router.push(`/board/${board?._id}`)"
+		>
 			<NuxtImg
 				:src="board.coverImage"
 				:alt="board.name"
