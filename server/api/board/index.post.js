@@ -9,8 +9,11 @@ export default defineEventHandler(async event => {
 
 	Validator.validateSchema(boardSchema, body);
 
+	const maxOrderBoard = await Board.findOne().sort({ order: -1 });
+
 	const board = await Board.create({
 		...body,
+		order: maxOrderBoard.order ? maxOrderBoard.order + 1 : 1,
 		owner: user?._id
 	});
 

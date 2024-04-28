@@ -21,6 +21,10 @@ const BoardModal = new mongoose.Schema(
                   type: String,
                   required: false,
                   default: null
+            },
+            order:{
+                  type:Number,
+                  unique: true
             }
       },
       {timestamps: true}

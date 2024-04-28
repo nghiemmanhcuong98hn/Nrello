@@ -8,6 +8,7 @@ const props = defineProps({
 	onUpdateAfter: Function ?? null
 });
 
+const { $logDebug } = useNuxtApp();
 const toast = useToast();
 
 // states
@@ -53,7 +54,7 @@ const onSubmit = async event => {
 		}
 		resetFormState();
 	} catch (error) {
-		console.log(error);
+		$logDebug('Log debug line 57[components/form/bard.vue]:', error);
 		toast.add({
 			title: 'Error!',
 			color: 'red',

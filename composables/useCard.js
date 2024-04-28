@@ -1,4 +1,5 @@
 export const useCard = () => {
+	const { $logDebug } = useNuxtApp();
 	const toast = useToast();
 
 	const updateCard = async (listId, cardId, data) => {
@@ -9,6 +10,7 @@ export const useCard = () => {
 				watch: false
 			});
 		} catch (error) {
+			$logDebug('Log debug line 12[composables/useCard.js]:', error);
 			toast.add({
 				title: 'Error',
 				error: 'Something when wrong'

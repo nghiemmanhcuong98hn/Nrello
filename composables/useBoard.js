@@ -1,4 +1,5 @@
 export const useBoard = () => {
+	const { $logDebug } = useNuxtApp();
 	const toast = useToast();
 	const destroy = async boardId => {
 		try {
@@ -13,6 +14,7 @@ export const useBoard = () => {
 				description: 'Deleted board successffuly'
 			});
 		} catch (error) {
+			$logDebug('Log debug line 17[composables/useBoard.js]:', error);
 			toast.add({
 				color: 'red',
 				title: 'Error',

@@ -1,9 +1,9 @@
 export const useList = (boardId) => {
+    const { $logDebug } = useNuxtApp();
     const toast = useToast()
 
 	// functions
 	const handleSort = async (lists) => {
-		console.log(lists);
 		await useFetch('/api/board/' + boardId, {
 			method: 'PUT',
 			body: {
@@ -26,6 +26,7 @@ export const useList = (boardId) => {
                 description:'Deleted list successffuly'
             })
         } catch (error) {
+            $logDebug('Log debug line 29[composables/useList.js]:', error);
             toast.add({
                 color:'red',
                 title:'Error',
