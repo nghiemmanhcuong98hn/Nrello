@@ -1,5 +1,5 @@
 <script setup>
-import { QuillEditor } from '@vueup/vue-quill';
+// import { QuillEditor } from '@vueup/vue-quill';
 import cardSchema from '~/server/schemas/card.schema';
 
 const props = defineProps({
@@ -83,13 +83,13 @@ watchEffect(() => {
 				<UInput v-model="formState.title" />
 			</UFormGroup>
 			<UFormGroup name="description" label="Description">
-				<ClientOnly>
+				<!-- <ClientOnly fallback-tag="div" fallback="Loading editor...">
 					<QuillEditor
 						v-model:content="formState.description"
 						content-type="html"
 						toolbar="minimal"
 					/>
-				</ClientOnly>
+				</ClientOnly> -->
 			</UFormGroup>
 			<UButton block :loading="_isLoading" type="submit">{{
 				type === 'update' ? 'Update card' : 'Create card'
