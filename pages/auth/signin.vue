@@ -1,6 +1,7 @@
 <script setup>
 import signinSchema from '~/server/schemas/signin.schema'
 
+const { $logDebug } = useNuxtApp();
 const { signIn } = useAuth()
 
 const isLoading = ref(false)
@@ -21,7 +22,7 @@ const onSubmit = async event => {
                   useRouter().push('/')
             }
       } catch (error) {
-            console.log(error)
+            $logDebug('Log debug line 25[pages/Signin.vue]:', error);
       } finally {
             isLoading.value = false
       }

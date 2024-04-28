@@ -6,13 +6,14 @@ export default defineNuxtConfig({
 		preference: 'dark'
 	},
 
-	modules: ['nuxt-server-utils', '@nuxt/ui', '@sidebase/nuxt-auth'],
+	modules: ['nuxt-server-utils', '@nuxt/ui', '@sidebase/nuxt-auth','@nuxt/image'],
 
 	ui: {},
 
 	runtimeConfig: {
 		public: {
-			mongodbUrl: `mongodb+srv://${process.env.NUXT_DB_USERNAME}:${process.env.NUXT_DB_PASSWORD}@trello.xk40ihq.mongodb.net/?retryWrites=true&w=majority&appName=trello`
+			mongodbUrl: `mongodb+srv://${process.env.NUXT_DB_USERNAME}:${process.env.NUXT_DB_PASSWORD}@trello.xk40ihq.mongodb.net/?retryWrites=true&w=majority&appName=trello`,
+			pixapayApiKey: process.env.PIXAPAY_API_KEY
 		},
 		auth: {
 			secret: process.env.AUTH_SECRET,

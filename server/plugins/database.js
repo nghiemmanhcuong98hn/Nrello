@@ -1,12 +1,14 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-export default defineNitroPlugin(async() => {
-      const config = useRuntimeConfig()
+export default defineNitroPlugin(async () => {
+	const config = useRuntimeConfig();
 
-     try {
-            await  mongoose.connect(config.public.mongodbUrl)
-            console.log('Connect database successfully!');
-     } catch (error) {
-            console.log(error);
-     }
-})
+	try {
+		if (!mongoose.connection.readyState) {
+			await mongoose.connect(config.public.mongodbUrl);
+			console.log('Connect database successfully!');
+		}
+	} catch (error) {
+		console.log(error);
+	}
+});

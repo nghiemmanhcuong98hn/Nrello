@@ -1,11 +1,12 @@
 <script setup>
-import boardSchema from '~/server/schemas/board.schema';
+import listSchema from '~/server/schemas/list.schema';
 
 const props = defineProps({
 	type: String,
 	initinalFormState: Object ?? null,
 	onCreateAfter: Function ?? null,
-	onUpdateAfter: Function ?? null
+	onUpdateAfter: Function ?? null,
+	boardId: String
 });
 
 const { $logDebug } = useNuxtApp();
@@ -15,20 +16,19 @@ const toast = useToast();
 const _isLoading = ref(false);
 const formState = reactive({
 	name: undefined,
-	coverImage: undefined
+	board: props.boardId
 });
 
 // Functions
 const resetFormState = () => {
 	formState.name = undefined;
-	formState.coverImage = undefined;
 };
 
 const onSubmit = async event => {
 	try {
 		_isLoading.value = true;
 		if (props.type === 'update' && props.initinalFormState?._id) {
-			await useFetch('/api/board/' + props.initinalFormState?._id, {
+			await useFetch('/api/list/' + props.initinalFormState?._id, {
 				method: 'PUT',
 				body: event.data,
 				watch: false
@@ -37,10 +37,10 @@ const onSubmit = async event => {
 			toast.add({
 				title: 'Success',
 				color: 'green',
-				description: 'Updated board successfully'
+				description: 'Updated list successfully'
 			});
 		} else {
-			await useFetch('/api/board', {
+			await useFetch('/api/list', {
 				method: 'POST',
 				body: event.data,
 				watch: false
@@ -48,17 +48,17 @@ const onSubmit = async event => {
 			toast.add({
 				title: 'Success',
 				color: 'green',
-				description: 'Created board successfully'
+				description: 'Created list successfully'
 			});
 			props.onCreateAfter?.();
 		}
 		resetFormState();
 	} catch (error) {
-		$logDebug('Log debug line 57[components/form/bard.vue]:', error);
+		$logDebug('Log debug line 57[components/form/list.vue]:', error);
 		toast.add({
 			title: 'Error!',
 			color: 'red',
-			description: 'Board creation failed something went wrong!'
+			description: 'List creation failed something went wrong!'
 		});
 	} finally {
 		_isLoading.value = false;
@@ -68,12 +68,10 @@ const onSubmit = async event => {
 watchEffect(() => {
 	if (props.type === 'update' && props.initinalFormState) {
 		formState.name = props.initinalFormState.name;
-		formState.coverImage = props.initinalFormState.coverImage;
 	}
 
 	if (props.type === 'create') {
 		formState.name = undefined;
-		formState.coverImage = undefined;
 	}
 });
 </script>
@@ -82,16 +80,13 @@ watchEffect(() => {
 		:state="formState"
 		class="space-y-4"
 		@submit="onSubmit"
-		:schema="boardSchema"
+		:schema="listSchema"
 	>
 		<UFormGroup label="Name" name="name">
 			<UInput v-model="formState.name" />
 		</UFormGroup>
-		<UFormGroup name="coverImage" label="Cover Image">
-			<ImagePicker v-model="formState.coverImage" />
-		</UFormGroup>
 		<UButton block type="submit" :loading="_isLoading">
-			{{ type === 'update' ? 'Update Board' : 'Create Board' }}
+			{{ type === 'update' ? 'Update List' : 'Create List' }}
 		</UButton>
 	</UForm>
 </template>
