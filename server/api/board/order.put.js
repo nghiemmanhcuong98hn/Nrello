@@ -24,6 +24,15 @@ export default defineEventHandler(async event => {
 
 	await Promise.all([
 		startBoard.updateOne({
+			order: 999999
+		}),
+		endBoard.updateOne({
+			order: 999998
+		})
+	]);
+
+	await Promise.all([
+		startBoard.updateOne({
 			order: body.newIndex
 		}),
 		endBoard.updateOne({
