@@ -9,7 +9,9 @@ const _selectBoard = ref(undefined);
 const _formBoardType = ref('create');
 
 // apis
-const { data: boards, refresh, pending, status } = useFetch('/api/board');
+const { data: boards, refresh } = useFetch('/api/board');
+// provides
+provide('refesh-board', refresh);
 
 // Functions
 const onCreateBoardAfter = async () => {
@@ -53,6 +55,7 @@ const handleOpenBoardForm = (type, data = undefined) => {
 		<div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4">
 			<Card
 				v-for="board in boards"
+				:key="board._id"
 				:board="board"
 				:on-edit="
 					selectBoard => handleOpenBoardForm('update', selectBoard)

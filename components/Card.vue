@@ -4,6 +4,8 @@ const props = defineProps({
 	onEdit: Function
 });
 
+const { destroy } = useBoard();
+
 // injects
 const refeshBoard = inject('refesh-board', () => {});
 
@@ -22,7 +24,10 @@ const actions = ref([
 		{
 			label: 'Delete',
 			icon: 'i-heroicons-trash',
-			click: () => {}
+			click: async () => {
+				await destroy(props.board?._id);
+				refeshBoard();
+			}
 		}
 	]
 ]);
@@ -42,7 +47,10 @@ const actions = ref([
 		<div
 			class="flex items-center justify-between gap-2 absolute left-0 z-10 top-0 py-2 pl-2 pr-8"
 		>
-			<NuxtLink to="/" class="block font-semibold text-white truncate-2">
+			<NuxtLink
+				:to="`/board/${board?._id}`"
+				class="block font-semibold text-white truncate-2"
+			>
 				{{ board.name }}
 			</NuxtLink>
 		</div>
