@@ -9,6 +9,7 @@ const props = defineProps({
 	boardId: String
 });
 
+const { $logDebug } = useNuxtApp();
 const toast = useToast();
 
 // states
@@ -53,6 +54,7 @@ const onSubmit = async event => {
 		}
 		resetFormState();
 	} catch (error) {
+		$logDebug('Log debug line 57[components/form/list.vue]:', error);
 		toast.add({
 			title: 'Error!',
 			color: 'red',

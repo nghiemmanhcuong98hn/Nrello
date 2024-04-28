@@ -4,6 +4,7 @@ const props = defineProps({
 	onEdit: Function
 });
 
+const router = useRouter();
 const { destroy } = useBoard();
 
 // injects
@@ -33,7 +34,10 @@ const actions = ref([
 ]);
 </script>
 <template>
-	<div class="shadow drak:bg-gray-800 rounded-lg overflow-hidden relative min-h-36">
+	<div
+		class="shadow drak:bg-gray-800 rounded-lg overflow-hidden relative min-h-36 cursor-pointer"
+		@click="() => router.push(`/board/${board?._id}`)"
+	>
 		<div v-if="board.coverImage" class="h-36 relative">
 			<NuxtImg
 				:src="board.coverImage"

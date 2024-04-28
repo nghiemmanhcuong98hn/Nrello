@@ -1,6 +1,7 @@
 <script setup>
 import signupSchema from '~/server/schemas/signup.schema'
 
+const { $logDebug } = useNuxtApp();
 const router = useRouter()
 const toast = useToast()
 const isLoading = ref(false)
@@ -31,7 +32,7 @@ const onSubmit = async event => {
                               router.push('/auth/signin')
                         } else {
                               toast.add({
-                                    title: 'Account created',
+                                    title: 'Error creating account',
                                     color: 'red',
                                     description: _data.message ?? 'Something went wrong!'
                               })
@@ -39,8 +40,9 @@ const onSubmit = async event => {
                   }
             })
       } catch (error) {
+            $logDebug('Log debug line 42[pages/Signup.vue]:', error);
             toast.add({
-                  title: 'Account created',
+                  title: 'Error creating account',
                   color: 'red',
                   description: error.message ?? 'Something went wrong!'
             })

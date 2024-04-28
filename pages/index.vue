@@ -1,7 +1,12 @@
 <script setup>
+import draggableComponent from 'vuedraggable';
+const { $logDebug } = useNuxtApp();
+
 definePageMeta({
 	middleware: ['auth']
 });
+
+const toast = useToast();
 
 // states
 const _isShowCrateBoard = ref(false);
@@ -30,6 +35,29 @@ const handleOpenBoardForm = (type, data = undefined) => {
 	_isShowCrateBoard.value = true;
 	_selectBoard.value = data;
 };
+
+const hanldeChangeOderboard = async event => {
+	if (event.moved) {
+		const { newIndex, oldIndex } = event.moved;
+		try {
+			await useFetch('/api/board/order', {
+				method: 'PUT',
+				body: {
+					newIndex: newIndex + 1,
+					oldIndex: oldIndex + 1
+				},
+				watch: false
+			});
+			await refresh();
+		} catch (error) {
+			$logDebug('Log debug line 45[page/index.vue]:', error);
+			toast.add({
+				title: 'Error',
+				description: error.message ?? 'Something went wrong'
+			});
+		}
+	}
+};
 </script>
 <template>
 	<WrapperDefault>
@@ -52,15 +80,32 @@ const handleOpenBoardForm = (type, data = undefined) => {
 				/>
 			</div>
 		</USlideover>
-		<div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4">
-			<Card
-				v-for="board in boards"
-				:key="board._id"
-				:board="board"
-				:on-edit="
-					selectBoard => handleOpenBoardForm('update', selectBoard)
-				"
-			/>
-		</div>
+		<draggableComponent
+			:animation="200"
+			:scroll-sensitivity="500"
+			:force-fallback="true"
+			:list="boards"
+			ghost-class="ghost-list"
+			itemKey="_id"
+			@change="hanldeChangeOderboard"
+			class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4"
+		>
+			<template #item="{ element }">
+				<Card
+					:board="element"
+					:data-index="element._id"
+					:on-edit="
+						selectBoard =>
+							handleOpenBoardForm('update', selectBoard)
+					"
+				/>
+			</template>
+		</draggableComponent>
 	</WrapperDefault>
 </template>
+<style>
+.ghost-list.sortable-chosen > div {
+	cursor: grabbing !important;
+	opacity: 0.5 !important;
+}
+</style>

@@ -5,7 +5,7 @@ const props = defineProps({
 	list: Object
 });
 
-const { updateCard } = useCard();
+const { $logDebug } = useNuxtApp();
 const { destroy, updateOrderCardsInList } = useList();
 
 // apis
@@ -68,6 +68,7 @@ const handleChangeOrderCard = async e => {
 		// }
 		await updateOrderCardsInList(props.list?._id, data.value);
 	} catch (error) {
+		$logDebug('Log debug line 71[components/List/Item.vue]:', error);
 		toast.add({
 			title: 'Error',
 			error: 'Something when wrong'

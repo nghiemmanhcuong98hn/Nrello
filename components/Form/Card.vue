@@ -9,6 +9,7 @@ const props = defineProps({
 	onAfterUpdate: Function
 });
 
+const { $logDebug } = useNuxtApp();
 const toast = useToast();
 
 // states
@@ -50,6 +51,7 @@ const onSubmit = async event => {
 			props.onAfterCreate();
 		}
 	} catch (error) {
+		$logDebug('Log debug line 53[components/form/card.vue]:', error);
 		toast.add({
 			title: 'Error',
 			description: error.message ?? 'Something went wrong'
