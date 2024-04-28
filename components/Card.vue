@@ -33,7 +33,7 @@ const actions = ref([
 ]);
 </script>
 <template>
-	<div class="shadow drak:bg-gray-800 rounded-lg overflow-hidden relative">
+	<div class="shadow drak:bg-gray-800 rounded-lg overflow-hidden relative min-h-36">
 		<div v-if="board.coverImage" class="h-36 relative">
 			<NuxtImg
 				:src="board.coverImage"
