@@ -13,7 +13,7 @@ export default defineEventHandler(async event => {
 
 	const board = await Board.create({
 		...body,
-		order: maxOrderBoard.order ? maxOrderBoard.order + 1 : 1,
+		order: maxOrderBoard?.order ? maxOrderBoard?.order + 1 : 1,
 		owner: user?._id
 	});
 
