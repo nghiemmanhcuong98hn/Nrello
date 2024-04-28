@@ -14,7 +14,8 @@ const BoardModal = new mongoose.Schema(
             list: [{type: mongoose.Schema.Types.ObjectId, ref: 'List'}],
             owner: {
                   type: mongoose.Schema.Types.ObjectId,
-                  ref: 'User'
+                  ref: 'User',
+                  required:true
             },
             coverImage: {
                   type: String,

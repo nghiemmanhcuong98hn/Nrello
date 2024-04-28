@@ -6,7 +6,7 @@ const ListModel = new mongoose.Schema(
 			type: String,
 			required: true
 		},
-		cards: [{ type: mongoose.Types.ObjectId }],
+		cards: [{ type: mongoose.Types.ObjectId, ref: 'Card' }],
 		board: {
 			type: mongoose.Types.ObjectId,
 			ref: 'Board',

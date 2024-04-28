@@ -9,11 +9,11 @@ const _formListType = ref('create');
 // apis
 const { data, refresh } = await useFetch('/api/board/' + route.params.id);
 
-if(!data.value) {
+if (!data.value) {
 	throw createError({
-		status:404,
-		message:'Board not found!'
-	})
+		status: 404,
+		message: 'Board not found!'
+	});
 }
 
 // functions
@@ -33,7 +33,6 @@ const handleAfterUpdate = async () => {
 	_isShowListForm.value = false;
 	_selectedList.value = null;
 };
-
 </script>
 <template>
 	<WrapperDefault
