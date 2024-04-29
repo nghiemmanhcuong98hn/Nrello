@@ -35,7 +35,7 @@ const actions = ref([
 </script>
 <template>
 	<div
-		class="shadow drak:bg-gray-800 rounded-lg overflow-hidden relative min-h-36 cursor-pointer"
+		class="shadow-lg drak:bg-gray-800 rounded-lg overflow-hidden relative min-h-36 cursor-pointer"
 	>
 		<div
 			v-if="board.coverImage"

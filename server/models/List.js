@@ -16,6 +16,10 @@ const ListModel = new mongoose.Schema(
 			type: mongoose.Types.ObjectId,
 			ref: 'User',
 			required: true
+		},
+		headerBg: {
+			type: String,
+			default: null
 		}
 	},
 	{ timestamps: true }

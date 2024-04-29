@@ -22,6 +22,7 @@ const formState = reactive({
 // Functions
 const resetFormState = () => {
 	formState.name = undefined;
+	formState.headerBg = undefined;
 };
 
 const onSubmit = async event => {
@@ -68,10 +69,12 @@ const onSubmit = async event => {
 watchEffect(() => {
 	if (props.type === 'update' && props.initinalFormState) {
 		formState.name = props.initinalFormState.name;
+		formState.headerBg = props.initinalFormState.headerBg;
 	}
 
 	if (props.type === 'create') {
 		formState.name = undefined;
+		formState.headerBg = undefined;
 	}
 });
 </script>
@@ -84,6 +87,9 @@ watchEffect(() => {
 	>
 		<UFormGroup label="Name" name="name">
 			<UInput v-model="formState.name" />
+		</UFormGroup>
+		<UFormGroup label="Header backgroud" name="headerBg">
+ 			<UInput v-model="formState.headerBg" type="color" inputClass="h-[45px] w-[100px]"/>
 		</UFormGroup>
 		<UButton block type="submit" :loading="_isLoading">
 			{{ type === 'update' ? 'Update List' : 'Create List' }}

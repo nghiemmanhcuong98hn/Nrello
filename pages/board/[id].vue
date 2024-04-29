@@ -33,6 +33,11 @@ const handleAfterUpdate = async () => {
 	_isShowListForm.value = false;
 	_selectedList.value = null;
 };
+
+// provides
+provide('show-list-form',handleShowListForm)
+provide('refesh-list',refresh)
+
 </script>
 <template>
 	<WrapperDefault
