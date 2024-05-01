@@ -141,12 +141,12 @@ watchEffect(() => {
 						class="flex items-center w-max p-1 rounded-sm mt-1 ml-4"
 						:class="
 							formState.isDone
-								? 'bg-green-500'
+								? 'bg-green-500 text-white'
 								: status === 'todo'
-								? 'bg-blue-500'
+								? 'bg-blue-500 text-white'
 								: status === 'inprogress'
 								? '-ml-1'
-								: 'bg-red-500'
+								: 'bg-red-500 text-white'
 						"
 					>
 						<UIcon
