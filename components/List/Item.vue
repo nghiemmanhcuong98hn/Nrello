@@ -126,9 +126,15 @@ const handleChangeOrderCard = async e => {
 		</div>
 		<!-- end  footer -->
 		<Teleport to="body">
-			<UModal v-model="_isShowFormCardModal" :ui="{
-				width:'sm:max-w-2xl'
-			}">
+			<UModal
+				v-model="_isShowFormCardModal"
+				:ui="{
+					width:
+						_formCardType === 'update'
+							? 'sm:max-w-5xl'
+							: 'sm:max-w-2xl'
+				}"
+			>
 				<OverlayHeader
 					:title="_selectCard ? 'Update card' : 'Create card'"
 					:on-click="() => (_isShowFormCardModal = false)"
@@ -146,7 +152,7 @@ const handleChangeOrderCard = async e => {
 	</div>
 </template>
 <style>
-.ql-container  {
+.ql-container {
 	height: 200px;
 }
 </style>
