@@ -133,12 +133,12 @@ watchEffect(() => {
 			>
 				<div>
 					<h3>Title</h3>
-					<p class="mt-1">{{ formState.title }}</p>
+					<p class="mt-1 pl-4">{{ formState.title }}</p>
 				</div>
 				<div>
 					<h3>Due Date</h3>
 					<div
-						class="flex items-center w-max p-1 rounded-sm mt-1"
+						class="flex items-center w-max p-1 rounded-sm mt-1 ml-4"
 						:class="
 							formState.isDone
 								? 'bg-green-500'
@@ -171,7 +171,8 @@ watchEffect(() => {
 				<div>
 					<h3>Description</h3>
 					<div
-						class="pl-4 text-[14px] mt-1"
+						class="pl-4 mt-1 card-description"
+						:style="{}"
 						v-html="formState.description"
 					/>
 				</div>
@@ -219,9 +220,23 @@ watchEffect(() => {
 	</div>
 </template>
 <style>
-ul,
-ol {
-	list-style: unset;
-	margin-left: 30px;
+.card-description ul {
+	list-style: disc;
+	padding-left: 30px;
+}
+
+.card-description h1 {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.card-description h2 {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.card-description ol {
+	list-style: decimal;
+	padding-left: 30px;
 }
 </style>
