@@ -21,11 +21,14 @@ const CardModel = new mongoose.Schema(
 			required: true,
 			ref: 'List'
 		},
-		createdAt: {
+		startDate: {
 			type: Date
 		},
-		updatedAt: {
+		endDate: {
 			type: Date
+		},
+		isDone: {
+			type: Boolean
 		}
 	},
 	{

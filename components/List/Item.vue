@@ -82,7 +82,7 @@ const handleChangeOrderCard = async e => {
 
 <template>
 	<div
-		class="flex flex-col w-64 shadow flex-none bg-white dark:bg-gray-800 rounded-lg"
+		class="flex flex-col w-[280px] shadow flex-none bg-white dark:bg-gray-800 rounded-lg"
 	>
 		<!-- header -->
 		<div
