@@ -35,16 +35,22 @@ const handleAfterUpdate = async () => {
 };
 
 // provides
-provide('show-list-form',handleShowListForm)
-provide('refesh-list',refresh)
-
+provide('show-list-form', handleShowListForm);
+provide('refesh-list', refresh);
 </script>
 <template>
 	<WrapperDefault
 		v-if="data"
 		class="h-screen bg-no-repeat bg-center bg-cover relative"
 		:style="{
-			backgroundImage: `url(${data?.coverImage})`
+			backgroundImage: `url(${data?.coverImage})`,
+			...(!data?.coverImage
+				? {
+						backgroundColor: getDefaultBackgroupBoard(
+							data.backgroundIndex
+						)
+				  }
+				: {})
 		}"
 	>
 		<div

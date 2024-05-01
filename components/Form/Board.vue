@@ -30,7 +30,12 @@ const onSubmit = async event => {
 		if (props.type === 'update' && props.initinalFormState?._id) {
 			await useFetch('/api/board/' + props.initinalFormState?._id, {
 				method: 'PUT',
-				body: event.data,
+				body: {
+					...event.data,
+					...(!event.data.coverImage
+						? { backgroundIndex: Math.floor(Math.random() * 5) }
+						: {})
+				},
 				watch: false
 			});
 			props.onUpdateAfter?.();
@@ -42,7 +47,12 @@ const onSubmit = async event => {
 		} else {
 			await useFetch('/api/board', {
 				method: 'POST',
-				body: event.data,
+				body: {
+					...event.data,
+					...(!event.data.coverImage
+						? { backgroundIndex: Math.floor(Math.random() * 5) }
+						: {})
+				},
 				watch: false
 			});
 			toast.add({
