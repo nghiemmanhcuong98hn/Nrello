@@ -2,11 +2,18 @@
 export default defineNuxtConfig({
 	devtools: { enabled: true },
 
+	css: ['~/assets/styles/main.css'],
+
 	colorMode: {
 		preference: 'dark'
 	},
 
-	modules: ['nuxt-server-utils', '@nuxt/ui', '@sidebase/nuxt-auth','@nuxt/image'],
+	modules: [
+		'nuxt-server-utils',
+		'@nuxt/ui',
+		'@sidebase/nuxt-auth',
+		'@nuxt/image'
+	],
 
 	ui: {},
 
