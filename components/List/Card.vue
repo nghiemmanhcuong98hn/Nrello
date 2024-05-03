@@ -23,7 +23,7 @@ const handleDeleteCard = async () => {
 			color: 'green',
 			description: 'Deleted card successfully'
 		});
-		refeshList()
+		refeshList();
 	} catch (error) {
 		$logDebug('Log debug inline 14 [components/List/Card.vue]', error);
 		toast.add({
@@ -61,10 +61,7 @@ const status = computed(() => {
 	<div
 		class="p-1 pb-[7px] border shadow relative group rounded-md dark:border-gray-700 bg-white dark:bg-gray-700 hover:cursor-pointer"
 	>
-		<div
-			@click="onClick"
-			class="absolute top-0 left-0 right-0 bottom-0 z-[1]"
-		/>
+		<div class="absolute top-0 left-0 right-0 bottom-0 z-[1]" @click="onClick"/>
 		<UIcon
 			name="i-heroicons-trash"
 			class="absolute top-1 right-1 z-[2] group-hover:opacity-100 opacity-0 duration-200"
@@ -107,15 +104,15 @@ const status = computed(() => {
 				</p>
 			</div>
 		</div>
+		<UModal v-model="_isOpenModalDelete"
+			><ModalConfirmDelete
+				:is-open="_isOpenModalDelete"
+				title="Delete card"
+				description="Are you sure you want to delete this card?"
+				:on-close="() => (_isOpenModalDelete = false)"
+				:on-delete="handleDeleteCard"
+		/></UModal>
 	</div>
-	<UModal v-model="_isOpenModalDelete"
-		><ModalConfirmDelete
-			:is-open="_isOpenModalDelete"
-			title="Delete card"
-			description="Are you sure you want to delete this card?"
-			:on-close="() => (_isOpenModalDelete = false)"
-			:on-delete="handleDeleteCard"
-	/></UModal>
 </template>
 <style>
 .ghost-card > p {
