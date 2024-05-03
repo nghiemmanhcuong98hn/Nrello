@@ -113,6 +113,7 @@ const handleChangeOrderCard = async e => {
 			<template #item="{ element }">
 				<ListCard
 					:card="element"
+					:listId="props.list?._id"
 					:on-click="() => handleOpenFormModal('update', element)"
 				/>
 			</template>
