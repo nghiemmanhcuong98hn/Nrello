@@ -11,6 +11,9 @@ const { destroy } = useBoard();
 const refeshBoard = inject('refesh-board', () => {});
 
 // functions
+const handleInviteUser = async () => {
+	await useFetch(`/api/board/${props.board._id}/invite`, { method: 'PUT' });
+};
 
 // states
 const actions = ref([
@@ -19,6 +22,13 @@ const actions = ref([
 			label: 'Edit',
 			icon: 'i-heroicons-pencil',
 			click: () => props?.onEdit(props.board)
+		}
+	],
+	[
+		{
+			label: 'Invite User',
+			icon: 'i-heroicons-envelope',
+			click: handleInviteUser
 		}
 	],
 	[

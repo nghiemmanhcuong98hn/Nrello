@@ -28,7 +28,8 @@ const BoardModal = new mongoose.Schema(
 		},
 		order: {
 			type: Number
-		}
+		},
+		managerUsers: [{ type: mongoose.Types.ObjectId, ref: 'User' }]
 	},
 	{ timestamps: true }
 );
