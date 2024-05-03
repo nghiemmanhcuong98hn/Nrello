@@ -204,12 +204,12 @@ watchEffect(() => {
 				<div>
 					<h3>Due Date</h3>
 					<div class="flex items-center w-max p-1 rounded-sm mt-1 ml-2" :class="formState.isDone
-						? 'bg-green-500'
+						? 'bg-green-500 text-white'
 						: status === 'todo'
-							? 'bg-blue-500'
+							? 'bg-blue-500 text-white'
 							: status === 'inprogress'
 								? '-ml-1'
-								: 'bg-red-500'
+								: 'bg-red-500 text-white'
 						">
 						<UIcon name="i-heroicons-clock-solid" class="w-4 h-4 mr-1" />
 						<p class="text-[12px]">
@@ -241,7 +241,7 @@ watchEffect(() => {
 					</div>
 					<div class="px-4 mt-4">
 						<div v-for="comment in data" class="flex items-start gap-2 mb-2">
-							<UButton class="w-[32px] h-[32px] rounded-[50%] flex justify-center">
+							<UButton class="w-[32px] h-[32px] rounded-[50%] flex justify-center text-[14px]">
 								{{ getName(comment.owner.name) }}
 							</UButton>
 							<div>
@@ -255,7 +255,7 @@ watchEffect(() => {
 								</div>
 								<div class="bg-white rounded-md p-2 shadow dark:bg-gray-700">
 									<UInput v-if="comment._id === _selectCommentId && !_isOpenModalDelete" v-model="messageEdit" />
-									<p v-else class="leading-none text-black break-all dark:text-white">
+									<p v-else class="leading-none text-black break-all dark:text-white text-[14px]">
 										{{ comment.message }}
 									</p>
 								</div>
