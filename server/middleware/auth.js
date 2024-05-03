@@ -3,7 +3,7 @@ import {getServerSession} from '#auth'
 export default defineEventHandler(async event => {
       const session = await getServerSession(event)
 
-      const protecedRoutes = ['/api/user', '/api/board', '/api/list']
+      const protecedRoutes = ['/api/user', '/api/board', '/api/list','/api/comment']
 
       const isProtectedRoute = protecedRoutes.some(route => getRequestURL(event).pathname.startsWith(route))
 
