@@ -12,7 +12,7 @@ const { destroy, updateOrderCardsInList } = useList();
 const { data, refresh } = useFetch('/api/list/' + props.list?._id + '/card');
 
 // provides
-provide('refesh-board',refresh)
+provide('refesh-board', refresh);
 
 // Functions
 const handleOpenFormModal = (type, data = null) => {
@@ -33,13 +33,21 @@ const handleAfterUpdate = () => {
 };
 
 // injects
-const refeshBoard = inject('refesh-board', () => {});
+const refeshList = inject('refesh-list', () => {});
+const handleShowListForm = inject('show-list-form', () => {});
 
 // states
 const _isShowFormCardModal = ref(false);
 const _selectCard = ref(null);
 const _formCardType = ref('create');
 const actions = ref([
+	[
+		{
+			label: 'Edit List',
+			icon: 'i-heroicons-pencil',
+			click: () => handleShowListForm('update', props.list)
+		}
+	],
 	[
 		{
 			label: 'Add Card',
@@ -53,7 +61,7 @@ const actions = ref([
 			icon: 'i-heroicons-trash',
 			click: async () => {
 				await destroy(props.list?._id);
-				refeshBoard();
+				refeshList();
 			}
 		}
 	]
@@ -61,11 +69,6 @@ const actions = ref([
 
 const handleChangeOrderCard = async e => {
 	try {
-		// if (e.added?.element) {
-		// 	await updateCard(props.list?._id, e.added?.element?._id, {
-		// 		list: props.list?._id
-		// 	});
-		// }
 		await updateOrderCardsInList(props.list?._id, data.value);
 	} catch (error) {
 		$logDebug('Log debug line 71[components/List/Item.vue]:', error);
@@ -79,11 +82,14 @@ const handleChangeOrderCard = async e => {
 
 <template>
 	<div
-		class="flex flex-col w-64 shadow flex-none bg-white dark:bg-gray-800 rounded-lg"
+		class="flex flex-col w-[280px] shadow flex-none bg-white dark:bg-gray-800 rounded-lg"
 	>
 		<!-- header -->
 		<div
-			class="p-2 border-b list-handle dark:border-gray-700 flex items-center justify-between"
+			class="p-2 border-b list-handle dark:border-gray-700 flex items-center justify-between rounded-t-lg text-shadow"
+			:style="{
+				backgroundColor: list.headerBg ? list.headerBg : 'unset'
+			}"
 		>
 			<h3 class="font-medium">{{ list.name }}</h3>
 			<UDropdown :items="actions" class="z-[11]">
@@ -107,6 +113,7 @@ const handleChangeOrderCard = async e => {
 			<template #item="{ element }">
 				<ListCard
 					:card="element"
+					:listId="props.list?._id"
 					:on-click="() => handleOpenFormModal('update', element)"
 				/>
 			</template>
@@ -120,7 +127,15 @@ const handleChangeOrderCard = async e => {
 		</div>
 		<!-- end  footer -->
 		<Teleport to="body">
-			<UModal v-model="_isShowFormCardModal">
+			<UModal
+				v-model="_isShowFormCardModal"
+				:ui="{
+					width:
+						_formCardType === 'update'
+							? 'sm:max-w-5xl'
+							: 'sm:max-w-2xl'
+				}"
+			>
 				<OverlayHeader
 					:title="_selectCard ? 'Update card' : 'Create card'"
 					:on-click="() => (_isShowFormCardModal = false)"
@@ -137,3 +152,8 @@ const handleChangeOrderCard = async e => {
 		</Teleport>
 	</div>
 </template>
+<style>
+.ql-container {
+	height: 200px;
+}
+</style>

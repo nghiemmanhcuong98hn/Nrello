@@ -24,7 +24,11 @@ export default defineEventHandler(async event => {
 			owner: user._id
 		},
 		{
-			$set: body
+			$set: {
+				...body,
+				startDate: new Date(body.startDate),
+				endDate: new Date(body.endDate),
+			}
 		},
 		{
 			new: true

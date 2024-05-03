@@ -35,18 +35,27 @@ const actions = ref([
 </script>
 <template>
 	<div
-		class="shadow drak:bg-gray-800 rounded-lg overflow-hidden relative min-h-36 cursor-pointer"
+		class="shadow-lg drak:bg-gray-800 rounded-lg overflow-hidden relative min-h-36 cursor-pointer"
 	>
 		<div
-			v-if="board.coverImage"
 			class="h-36 relative"
 			@click="() => router.push(`/board/${board?._id}`)"
 		>
 			<NuxtImg
+				v-if="board.coverImage"
 				:src="board.coverImage"
 				:alt="board.name"
 				class="h-full w-full object-cover absolute z-[1]"
 			/>
+			<div
+				v-if="!board.coverImage"
+				class="h-full w-full absolute z-[1]"
+				:style="{
+					backgroundColor: getDefaultBackgroupBoard(
+						board.backgroundIndex
+					)
+				}"
+			></div>
 			<div
 				class="absolute w-full h-full z-[2] bg-gradient-to-b from-black/90 to-transparent"
 			></div>

@@ -1,4 +1,5 @@
 import { Validator } from '#nuxt-server-utils';
+import Card from '~/server/models/Card';
 import List from '~/server/models/List';
 import listSchema from '~/server/schemas/list.schema';
 
@@ -26,6 +27,19 @@ export default defineEventHandler(async event => {
 			statusMessage: 'Error',
 			message: 'Something went wrong'
 		});
+	}
+
+	if (body.cards && body.cards.length > 0) {
+		await Promise.all(
+			body.cards.map(cardId => {
+				return Card.findOneAndUpdate(
+					{
+						_id: cardId
+					},
+					{ $set: { list: listId } }
+				);
+			})
+		);
 	}
 
 	return list;

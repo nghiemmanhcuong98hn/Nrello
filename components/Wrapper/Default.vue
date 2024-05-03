@@ -17,7 +17,8 @@ const menu = ref([
 		{
 			label: 'Billing',
 			icon: 'i-heroicons-credit-card',
-			click: () => {}
+			click: () => {},
+			disabled: true
 		}
 	],
 	[
