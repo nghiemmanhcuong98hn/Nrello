@@ -20,8 +20,8 @@ export default defineEventHandler(async event => {
 	const card = await Card.create({
 		...body,
 		list: listId,
-		startDate: new Date(body.startDate),
-		endDate: new Date(body.endDate),
+		startDate: body.startDate ? new Date(body.startDate) : new Date(),
+		endDate: body.endDate ? new Date(body.endDate) : new Date(),
 		owner: user._id
 	});
 

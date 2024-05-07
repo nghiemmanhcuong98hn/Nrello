@@ -20,7 +20,7 @@ const { handleSort } = useList(props.boardId);
 			item-key="_id"
 			ghost-class="ghost-board"
 			@sort="() => handleSort(lists)"
-			class="flex gap-4 h-[80vh] overflow-x-auto pb-5"
+			class="flex gap-4 h-[80vh] overflow-x-auto pb-5 custome-scroll-bar"
 		>
 			<template #item="{ element }">
 				<div class="flex">

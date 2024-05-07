@@ -26,6 +26,7 @@ body {
 .custome-scroll-bar::-webkit-scrollbar {
 	width: 5px;
 	border-radius: 10px;
+	height: 8px;
 }
 
 .custome-scroll-bar::-webkit-scrollbar-track {

@@ -22,7 +22,7 @@ const CardModel = new mongoose.Schema(
 			ref: 'List'
 		},
 		startDate: {
-			type: Date
+			type: Date,
 		},
 		endDate: {
 			type: Date

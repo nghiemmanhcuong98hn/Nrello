@@ -16,7 +16,8 @@ const toast = useToast();
 
 // apis
 const { data, refresh } = await useFetch(
-	`/api/comment/${props.initialFormState?._id}`
+	`/api/comment/${props.initialFormState?._id}`,
+	{ immediate: Boolean(props.initialFormState?._id) }
 );
 
 // states
@@ -24,6 +25,7 @@ const message = defineModel('message');
 const messageEdit = defineModel('messageEdit');
 
 const _isOpenModalDelete = ref(false);
+const _isShowEditForm = ref(false);
 const _selectCommentId = ref(null);
 const _isLoading = ref(false);
 const _errorDate = ref(null);
@@ -125,10 +127,13 @@ const handlePostComment = async () => {
 
 const handleDeleteComment = async () => {
 	try {
-		await useFetch(`/api/comment/${_selectCommentId.value}/${props.initialFormState?._id}`, {
-			method: 'DELETE',
-			watch: false
-		});
+		await useFetch(
+			`/api/comment/${_selectCommentId.value}/${props.initialFormState?._id}`,
+			{
+				method: 'DELETE',
+				watch: false
+			}
+		);
 		_selectCommentId.value = null;
 		refresh();
 	} catch (error) {
@@ -138,26 +143,29 @@ const handleDeleteComment = async () => {
 			description: error.message ?? 'Something went wrong'
 		});
 	}
-}
+};
 
-const handleEditComment = async (comment) => {
+const handleEditComment = async comment => {
 	try {
 		if (_selectCommentId.value) {
-			if(messageEdit.value !== comment.message) {
-				await useFetch(`/api/comment/${_selectCommentId.value}/${props.initialFormState?._id}`,{
-					method:'PUT',
-					body: {
-						message: messageEdit.value
-					},
-					watch: false
-				})
+			if (messageEdit.value !== comment.message) {
+				await useFetch(
+					`/api/comment/${_selectCommentId.value}/${props.initialFormState?._id}`,
+					{
+						method: 'PUT',
+						body: {
+							message: messageEdit.value
+						},
+						watch: false
+					}
+				);
 				await refresh();
 			}
-			_selectCommentId.value = null
-			messageEdit.value = null
+			_selectCommentId.value = null;
+			messageEdit.value = null;
 		} else {
-			_selectCommentId.value = comment._id
-			messageEdit.value = comment.message
+			_selectCommentId.value = comment._id;
+			messageEdit.value = comment.message;
 		}
 	} catch (error) {
 		$logDebug('Log debug line 147[components/form/card.vue]:', error);
@@ -166,7 +174,7 @@ const handleEditComment = async (comment) => {
 			description: error.message ?? 'Something went wrong'
 		});
 	}
-}
+};
 
 // watch
 watchEffect(() => {
@@ -191,27 +199,67 @@ watchEffect(() => {
 </script>
 
 <template>
-	<div class="p-4">
-		<UForm :state="formState" :schema="cardSchema" class="-mt-4" :class="type === 'update'
-			? 'flex justify-between gap-4 md:flex-row flex-col'
-			: ''
-			" @submit="onSubmit">
-			<div v-if="type === 'update'" class="md:w-[60%] w-full space-y-3 pt-4 h-[55vh] overflow-y-auto md:border-b-0 border-b border-white md:pb-0 pb-8 custome-scroll-bar">
+	<div class="p-4 pr-2">
+		<UForm
+			:state="formState"
+			:schema="cardSchema"
+			class="-mt-4 overflow-hidden"
+			:class="
+				type === 'update'
+					? 'flex justify-between gap-4 md:flex-row flex-col relative'
+					: ''
+			"
+			@submit="onSubmit"
+		>
+			<div
+				v-if="type === 'update'"
+				class="w-full flex-1 space-y-3 pt-4 h-[58vh] overflow-y-auto md:border-b-0 border-b border-white md:pb-0 pb-8 custome-scroll-bar"
+			>
 				<div>
-					<h3>Title</h3>
+					<div class="flex items-center justify-between gap-4 pr-5">
+						<h3>Title</h3>
+						<UTooltip
+							:text="
+								_isShowEditForm
+									? 'Close edit form'
+									: 'Open edit form'
+							"
+							:popper="{ placement: 'left' }"
+						>
+							<UButton
+								color="orange"
+								type="button"
+								@click="
+									() => (_isShowEditForm = !_isShowEditForm)
+								"
+							>
+								<UIcon
+									name="i-heroicons-pencil"
+									class="text-white"
+								/>
+							</UButton>
+						</UTooltip>
+					</div>
 					<p class="mt-1 pl-4">{{ formState.title }}</p>
 				</div>
 				<div>
 					<h3>Due Date</h3>
-					<div class="flex items-center w-max p-1 rounded-sm mt-1 ml-2" :class="formState.isDone
-						? 'bg-green-500 text-white'
-						: status === 'todo'
-							? 'bg-blue-500 text-white'
-							: status === 'inprogress'
+					<div
+						class="flex items-center w-max p-1 rounded-sm mt-1 ml-2"
+						:class="
+							formState.isDone
+								? 'bg-green-500 text-white'
+								: status === 'todo'
+								? 'bg-blue-500 text-white'
+								: status === 'inprogress'
 								? '-ml-1'
 								: 'bg-red-500 text-white'
-						">
-						<UIcon name="i-heroicons-clock-solid" class="w-4 h-4 mr-1" />
+						"
+					>
+						<UIcon
+							name="i-heroicons-clock-solid"
+							class="w-4 h-4 mr-1"
+						/>
 						<p class="text-[12px]">
 							{{
 								moment(formState.startDate).format(
@@ -229,44 +277,92 @@ watchEffect(() => {
 				</div>
 				<div>
 					<h3>Description</h3>
-					<div class="pl-4 mt-1 card-description" :style="{}" v-html="formState.description" />
+					<div
+						class="pl-4 mt-1 card-description"
+						:style="{}"
+						v-html="formState.description"
+					/>
 				</div>
 				<div>
 					<h3>Comemnts</h3>
 					<div class="px-4 mt-2 flex items-center gap-2">
-						<UButton class="h-[32px] rounded-[50%]" @click="handlePostComment" type="button">
+						<UButton
+							class="h-[32px] rounded-[50%]"
+							@click="handlePostComment"
+							type="button"
+						>
 							<UIcon name="i-heroicons-magnifying-glass" />
 						</UButton>
-						<UInput name="comment_message" placeholder="Write a comment..." class="flex-1" v-model="message" />
+						<UInput
+							name="comment_message"
+							placeholder="Write a comment..."
+							class="flex-1"
+							v-model="message"
+						/>
 					</div>
 					<div class="px-4 mt-4">
-						<div v-for="comment in data" class="flex items-start gap-2 mb-2">
-							<UButton class="w-[32px] h-[32px] rounded-[50%] flex justify-center text-[14px]">
+						<div
+							v-for="comment in data"
+							class="flex items-start gap-2 mb-2"
+						>
+							<UButton
+								class="w-[32px] h-[32px] rounded-[50%] flex justify-center text-[14px]"
+							>
 								{{ getName(comment.owner.name) }}
 							</UButton>
 							<div>
 								<div class="flex items-center gap-2 mb-1">
-									<p class="leading-none break-all text-[13px]">
+									<p
+										class="leading-none break-all text-[13px]"
+									>
 										{{ comment.owner.name }}
 									</p>
-									<p class="dark:text-gray-300 mt-[1px] text-[11px]">
+									<p
+										class="dark:text-gray-300 mt-[1px] text-[11px]"
+									>
 										{{ format(comment.createdAt) }}
 									</p>
 								</div>
-								<div class="bg-white rounded-md p-2 shadow dark:bg-gray-700">
-									<UInput v-if="comment._id === _selectCommentId && !_isOpenModalDelete" v-model="messageEdit" />
-									<p v-else class="leading-none text-black break-all dark:text-white text-[14px]">
+								<div
+									class="bg-white rounded-md p-2 shadow dark:bg-gray-700"
+								>
+									<UInput
+										v-if="
+											comment._id === _selectCommentId &&
+											!_isOpenModalDelete
+										"
+										v-model="messageEdit"
+									/>
+									<p
+										v-else
+										class="leading-none text-black break-all dark:text-white text-[14px]"
+									>
 										{{ comment.message }}
 									</p>
 								</div>
 								<div class="flex items-center gap-2 mt-1">
-									<p class="text-[11px] underline cursor-pointer" @click="() => handleEditComment(comment)">
-										{{ comment._id === _selectCommentId && !_isOpenModalDelete ? 'save' : 'edit' }}
+									<p
+										class="text-[11px] underline cursor-pointer"
+										@click="
+											() => handleEditComment(comment)
+										"
+									>
+										{{
+											comment._id === _selectCommentId &&
+											!_isOpenModalDelete
+												? 'save'
+												: 'edit'
+										}}
 									</p>
-									<p class="text-[11px] underline cursor-pointer" @click="() => {
-										_isOpenModalDelete = true
-										_selectCommentId = comment._id
-									}">
+									<p
+										class="text-[11px] underline cursor-pointer"
+										@click="
+											() => {
+												_isOpenModalDelete = true;
+												_selectCommentId = comment._id;
+											}
+										"
+									>
 										delete
 									</p>
 								</div>
@@ -275,8 +371,16 @@ watchEffect(() => {
 					</div>
 				</div>
 			</div>
-			<div class="space-y-4" :class="type === 'update' ? 'md:w-[40%] w-full' : ''">
-				<div class="absolute top-[15px] left-[7.5rem]">
+			<div
+				class="space-y-4 transition-all duration-500 ease-out h-[58vh] overflow-y-auto custome-scroll-bar"
+				:class="
+					type === 'update' && !_isShowEditForm
+						? 'flex-none w-[0px]'
+						: 'flex-1 w-auto'
+				"
+			>
+				<div class="mt-4 -mb-2 flex items-center gap-2">
+					<h3>Completed</h3>
 					<UTooltip text="Completed" :popper="{ placement: 'right' }">
 						<UCheckbox v-model="formState.isDone" />
 					</UTooltip>
@@ -287,7 +391,10 @@ watchEffect(() => {
 				<div class="grid sm:grid-cols-2 grid-cols-1 gap-4">
 					<UFormGroup name="startDate" label="Start Date">
 						<UInput v-model="formState.startDate" type="date" />
-						<p class="text-[12px] pl-1 pt-1 text-red-600" v-if="_errorDate">
+						<p
+							class="text-[12px] pl-1 pt-1 text-red-600"
+							v-if="_errorDate"
+						>
 							End date cannot be earlier than start date.
 						</p>
 					</UFormGroup>
@@ -297,7 +404,11 @@ watchEffect(() => {
 				</div>
 				<UFormGroup name="description" label="Description">
 					<ClientOnly fallback-tag="div" fallback="Loading editor...">
-						<QuillEditor v-model:content="formState.description" content-type="html" toolbar="minimal" />
+						<QuillEditor
+							v-model:content="formState.description"
+							content-type="html"
+							toolbar="essential"
+						/>
 					</ClientOnly>
 				</UFormGroup>
 				<UButton block :loading="_isLoading" type="submit">{{
@@ -307,14 +418,18 @@ watchEffect(() => {
 		</UForm>
 	</div>
 	<UModal v-model="_isOpenModalDelete">
-		<ModalConfirmDelete :is-open="_isOpenModalDelete" 
-		title="Delete comment" 
-		description="Are you sure you want to delete this comment?" 
-		:on-close="() => {
-			_isOpenModalDelete = false
-			_selectCommentId = null
-		}" 
-		:on-delete="handleDeleteComment" />
+		<ModalConfirmDelete
+			:is-open="_isOpenModalDelete"
+			title="Delete comment"
+			description="Are you sure you want to delete this comment?"
+			:on-close="
+				() => {
+					_isOpenModalDelete = false;
+					_selectCommentId = null;
+				}
+			"
+			:on-delete="handleDeleteComment"
+		/>
 	</UModal>
 </template>
 <style>
