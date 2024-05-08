@@ -38,3 +38,7 @@ body {
 	border-radius: 10px;
 	opacity: 70;
 }
+
+input:focus{
+	--tw-ring-inset: inset !important;
+}

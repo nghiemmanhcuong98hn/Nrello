@@ -438,14 +438,74 @@ watchEffect(() => {
 	padding-left: 30px;
 }
 
+.card-description > * {	
+	word-break: break-all;
+}
+
 .card-description h1 {
-	font-size: 20px;
+	font-size: 22px;
 	font-weight: bold;
 }
 
 .card-description h2 {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.card-description h3 {
 	font-size: 18px;
 	font-weight: bold;
+}
+
+.card-description h4 {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.card-description h5,p {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.card-description h6 {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.card-description blockquote {
+	border-left: 4px solid #ccc;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	padding-left: 16px;
+	word-break: break-all;
+	font-size: 13px;
+}
+
+.card-description pre {
+	background-color: #ccc;
+	overflow: visible;
+	word-break: break-all;
+	font-size: 13px;
+	padding: 0px 5px;
+	border-radius: 4px;
+	max-width: max-content;
+}
+
+.card-description a {
+	color: rgb(29, 96, 251) !important;
+	text-decoration: underline;
+}
+
+.card-description .ql-align-center {
+	text-align: center;
+}
+
+.card-description .ql-align-right {
+	text-align: right;
+}
+
+.card-description .ql-align-left {
+	text-align: left;
 }
 
 .card-description ol {
