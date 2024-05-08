@@ -439,7 +439,7 @@ watchEffect(() => {
 }
 
 .card-description > * {	
-	word-break: break-all;
+	word-break: auto-phrase;
 }
 
 .card-description h1 {
