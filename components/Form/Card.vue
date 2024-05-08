@@ -462,7 +462,7 @@ watchEffect(() => {
 	font-weight: bold;
 }
 
-.card-description h5,p {
+.card-description h5 {
 	font-size: 14px;
 	font-weight: bold;
 }
@@ -470,6 +470,10 @@ watchEffect(() => {
 .card-description h6 {
 	font-size: 12px;
 	font-weight: bold;
+}
+
+.card-description p {
+	font-size: 14px;
 }
 
 .card-description blockquote {
