@@ -486,13 +486,15 @@ watchEffect(() => {
 }
 
 .card-description pre {
-	background-color: #ccc;
+	background-color: #23241f;
 	overflow: visible;
 	word-break: break-all;
 	font-size: 13px;
-	padding: 0px 5px;
-	border-radius: 4px;
+	padding: 2px 10px;
+	border-radius: 2px;
 	max-width: max-content;
+	line-height: 2;
+	color: #f8f8f2;
 }
 
 .card-description a {
