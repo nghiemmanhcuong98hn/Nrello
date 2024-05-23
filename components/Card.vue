@@ -41,9 +41,9 @@ const actions = ref([
 			class="h-36 relative"
 			@click="() => router.push(`/board/${board?._id}`)"
 		>
-			<NuxtImg
+			<img
 				v-if="board.coverImage"
-				:src="board.coverImage"
+				:src="`/images/bg-${board.coverImage}.jpg`"
 				:alt="board.name"
 				class="h-full w-full object-cover absolute z-[1]"
 			/>

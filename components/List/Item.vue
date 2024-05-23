@@ -108,7 +108,7 @@ const handleChangeOrderCard = async e => {
 			:force-fallback="true"
 			ghost-class="ghost-card"
 			@change="handleChangeOrderCard"
-			class="p-2 space-y-2 overflow-hidden flex-1"
+			class="p-2 space-y-2 overflow-y-auto flex-1 custome-scroll-bar"
 		>
 			<template #item="{ element }">
 				<ListCard

@@ -43,7 +43,7 @@ provide('refesh-list', refresh);
 		v-if="data"
 		class="h-screen bg-no-repeat bg-center bg-cover relative"
 		:style="{
-			backgroundImage: `url(${data?.coverImage})`,
+			backgroundImage: `url(/images/bg-${data?.coverImage}.jpg)`,
 			...(!data?.coverImage
 				? {
 						backgroundColor: getDefaultBackgroupBoard(
