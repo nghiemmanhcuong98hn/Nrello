@@ -9,12 +9,10 @@ const _formListType = ref('create');
 // apis
 const { data, refresh } = await useFetch('/api/board/' + route.params.id);
 
-if (!data.value) {
-	throw createError({
-		status: 404,
-		message: 'Board not found!'
-	});
-}
+useSeoMeta({
+	title: data?.value?.name,
+	description: 'Project management doashboard'
+});
 
 // functions
 const handleShowListForm = (type, data = null) => {

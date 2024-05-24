@@ -1,4 +1,8 @@
 <script setup>
+useSeoMeta({
+	title: 'Sign up',
+	description: 'Project management doashboard'
+});
 import signupSchema from '~/server/schemas/signup.schema'
 
 const { $logDebug } = useNuxtApp();

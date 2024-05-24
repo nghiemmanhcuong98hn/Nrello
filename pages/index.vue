@@ -1,4 +1,9 @@
 <script setup>
+useSeoMeta({
+	title: 'Home',
+	description: 'Project management doashboard'
+});
+
 import draggableComponent from 'vuedraggable';
 const { $logDebug } = useNuxtApp();
 

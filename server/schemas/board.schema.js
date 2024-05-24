@@ -11,3 +11,11 @@ export default z.object({
 	coverImage: z.string().min(1).max(255).optional().nullable(),
 	list: z.array(z.string()).optional()
 });
+
+export const validateInvite = z.object({
+	email: z
+		.string({
+			required_error: 'Name is required!'
+		})
+		.email('Please enter a valid email address')
+});

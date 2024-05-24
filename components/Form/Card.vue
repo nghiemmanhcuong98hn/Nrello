@@ -115,6 +115,7 @@ const handlePostComment = async () => {
 			},
 			watch: false
 		});
+		message.value = undefined
 		refresh();
 	} catch (error) {
 		$logDebug('Log debug line 101[components/form/card.vue]:', error);
@@ -291,7 +292,7 @@ watchEffect(() => {
 							@click="handlePostComment"
 							type="button"
 						>
-							<UIcon name="i-heroicons-magnifying-glass" />
+							<UIcon name="i-heroicons-paper-airplane" />
 						</UButton>
 						<UInput
 							name="comment_message"
