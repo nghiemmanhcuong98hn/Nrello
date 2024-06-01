@@ -13,12 +13,10 @@ export default defineEventHandler(async event => {
 
 	const [startBoard, endBoard] = await Promise.all([
 		Board.findOne({
-			order: body.oldIndex,
-			owner: user?._id
+			order: body.oldIndex
 		}),
 		Board.findOne({
-			order: body.newIndex,
-			owner: user?._id
+			order: body.newIndex
 		})
 	]);
 

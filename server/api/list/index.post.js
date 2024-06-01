@@ -31,8 +31,12 @@ export default defineEventHandler(async event => {
 
 	await Board.findOneAndUpdate(
 		{
-			_id: body.board,
-			owner: user?._id
+			$and: [
+				{ _id: body.board },
+				{
+					$or: [{ owner: user?._id }, { managers: { $in: [user?._id] } }]
+				}
+			]
 		},
 		{
 			$push: { list: list?._id }

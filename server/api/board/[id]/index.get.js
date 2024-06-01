@@ -6,8 +6,12 @@ export default defineEventHandler(async event => {
 	const boardId = getRouterParam(event, 'id');
 
 	const board = await Board.findOne({
-		_id: boardId,
-		owner: user?._id
+		$and: [
+			{ _id: boardId },
+			{
+				$or: [{ owner: user?._id }, { managers: { $in: [user?._id] } }]
+			}
+		]
 	}).populate({ path: 'list', model: List });
 
 	if (!board) {

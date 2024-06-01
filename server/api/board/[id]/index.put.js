@@ -11,7 +11,10 @@ export default defineEventHandler(async event => {
 
 	const board = await Board.findById(id);
 
-	if (board?.owner.toString() !== user?._id.toString()) {
+	if (
+		board?.owner.toString() !== user?._id.toString() &&
+		!board.managers?.map(id => id?.toString()).includes(user?._id?.toString())
+	) {
 		return createError({
 			status: 403,
 			statusMessage: 'Unauthenticated!',

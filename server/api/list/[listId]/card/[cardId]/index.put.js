@@ -3,7 +3,6 @@ import Card from '~/server/models/Card';
 import cardSchema from '~/server/schemas/card.schema';
 
 export default defineEventHandler(async event => {
-	const user = event.context.user;
 	const body = await readBody(event);
 	const listId = getRouterParam(event, 'listId');
 	const cardId = getRouterParam(event, 'cardId');
@@ -21,7 +20,6 @@ export default defineEventHandler(async event => {
 		{
 			_id: cardId,
 			list: listId,
-			owner: user._id
 		},
 		{
 			$set: {

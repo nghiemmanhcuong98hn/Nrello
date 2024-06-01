@@ -7,7 +7,6 @@ export default defineEventHandler(async event => {
 
 	const comments = await Comment.find({
 		card: cardId,
-		owner: user._id
 	})
 		.populate({
 			path: 'owner',

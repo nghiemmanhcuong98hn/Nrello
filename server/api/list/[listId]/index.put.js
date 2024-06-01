@@ -1,10 +1,10 @@
 import { Validator } from '#nuxt-server-utils';
+import Board from '~/server/models/Board';
 import Card from '~/server/models/Card';
 import List from '~/server/models/List';
 import listSchema from '~/server/schemas/list.schema';
 
 export default defineEventHandler(async event => {
-	const user = event.context.user;
 	const body = await readBody(event);
 	const listId = getRouterParam(event, 'listId');
 
@@ -12,8 +12,7 @@ export default defineEventHandler(async event => {
 
 	const list = List.findOneAndUpdate(
 		{
-			_id: listId,
-			owner: user?._id
+			_id: listId
 		},
 		{
 			$set: body

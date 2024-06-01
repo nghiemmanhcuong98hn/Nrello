@@ -11,6 +11,7 @@ const props = defineProps({
 	onAfterUpdate: Function
 });
 
+const { data:user } = useAuth();
 const { $logDebug } = useNuxtApp();
 const toast = useToast();
 
@@ -341,7 +342,7 @@ watchEffect(() => {
 										{{ comment.message }}
 									</p>
 								</div>
-								<div class="flex items-center gap-2 mt-1">
+								<div v-if="comment.owner._id == user?._id" class="flex items-center gap-2 mt-1">
 									<p
 										class="text-[11px] underline cursor-pointer"
 										@click="
