@@ -33,7 +33,8 @@ const actions = ref([
 		{
 			label: 'Invite',
 			icon: 'i-heroicons-users',
-			click: () => (_isOpenModalInvite.value = true)
+			click: () => (_isOpenModalInvite.value = true),
+			disabled: true
 		}
 	],
 	[

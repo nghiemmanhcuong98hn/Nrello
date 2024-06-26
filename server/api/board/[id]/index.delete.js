@@ -6,13 +6,7 @@ export default defineEventHandler(async event => {
 	const user = event.context.user;
 	const boardId = getRouterParam(event, 'id');
 
-	const board = await Board.findOneAndDelete({
-		$or: [
-			{ _id: boardId },
-			{ owner: user?._id },
-			{ managers: { $in: [user?._id] } }
-		]
-	});
+	const board = await Board.findOneAndDelete({ _id: boardId });
 
 	if (!board) {
 		throw createError({
